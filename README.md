@@ -1,1 +1,1 @@
-#a x86 simple system
+#A x86 simple OS
