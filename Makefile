@@ -1,6 +1,7 @@
-CFLAGS := -nostdinc -fno-builtin -fno-stack-protector -fno-optimize-sibling-calls -fno-asynchronous-unwind-tables -include ./include/code16gcc.h -O2
+CFLAGS := -m32 -nostdinc -fno-builtin -fno-stack-protector -fno-optimize-sibling-calls -fno-asynchronous-unwind-tables -include ./include/code16gcc.h -O2
 CFLAGS += -I ./include
 LDFLAGS := -e start
+ASFLAGS := -m32
 
 OBJ_C := main.o print.o task.o sched.o
 OBJ_S := start.o outc.o inst_irq.o irq.o
@@ -14,7 +15,7 @@ img.bin:rawimg.bin
 	dd conv=sync if=./rawimg.bin of=./img.bin ibs=512 count=$(SEC_CNT)
 
 rawimg.bin: $(OBJ_C) $(OBJ_S)	
-	ld -T link.lds $(LDFLAGS) $^ -o img
+	ld -T link.lds -melf_i386 $(LDFLAGS) $^ -o img
 	objcopy -O binary img rawimg.bin
 
 
